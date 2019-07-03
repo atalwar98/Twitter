@@ -56,23 +56,28 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     //NSLog(@"inside cellforRow");
-    TweetCell *tweet = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+    TweetCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     
     Tweet *post = self.tweets[indexPath.row];
     User *user = post.user;
-    tweet.tweetAuthor.text = user.name;
+    tweetCell.tweetAuthor.text = user.name;
     
-    tweet.tweetBody.text = post.text;
-    tweet.tweetScreenName.text = user.screenName;
+    tweetCell.tweetBody.text = post.text;
+    tweetCell.tweetScreenName.text = user.screenName;
+    tweetCell.tweetDate.text = post.createdAtString;
+    NSString* retweetToString = [NSString stringWithFormat:@"%i", post.retweetCount];
+    tweetCell.retweetCount.text = retweetToString;
+    NSString* favToString = [NSString stringWithFormat:@"%i", post.favoriteCount];
+    tweetCell.favCount.text = favToString;
     //NSLog(@"tweet's body %@", post.text);
     NSString *profileUrl = user.profileUrl;
     //NSLog(@"tweet's image url %@", profileUrl);
     NSURL *url = [NSURL URLWithString:profileUrl];
     
      
-    [tweet.tweetImage setImageWithURL:url];
+    [tweetCell.tweetImage setImageWithURL:url];
     
-    return tweet;
+    return tweetCell;
 }
 
 /*

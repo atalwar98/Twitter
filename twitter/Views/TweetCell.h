@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *tweetBody;
 @property (weak, nonatomic) IBOutlet UILabel *tweetScreenName;
 @property (weak, nonatomic) IBOutlet UILabel *tweetDate;
+@property (weak, nonatomic) IBOutlet UILabel *favCount;
+@property (weak, nonatomic) IBOutlet UILabel *retweetCount;
 
 
 //this would be a dictionary and not a tweet object?
