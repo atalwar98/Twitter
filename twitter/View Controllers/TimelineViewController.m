@@ -13,8 +13,9 @@
 #import "Tweet.h"
 #import "User.h"
 
-@interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tweetView;
+@property (assign, nonatomic) BOOL isMoreDataLoading;
 
 @property (nonatomic, strong) NSArray *tweets;
 @end
@@ -24,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //step 3 - view controller becomes datasource and delegate
     self.tweetView.dataSource = self;
     self.tweetView.delegate = self;
     self.tweetView.rowHeight = 300;
@@ -39,15 +41,21 @@
 
 - (void) fetchTweets {
     // Get timeline
+    //first time shared is called you are instantiating an APIManager instance:
+    //step 4 - make an API request
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");
+            //step 6 - view controller stores data passed into completion handler
             self.tweets = [NSArray arrayWithArray:tweets];
             NSLog(@"set tweets successfully");
             for (Tweet *tweetObj in tweets) {
                 NSString *text = tweetObj.text;
                 NSLog(@"%@", text);
             }
+            //table view asks its datasource for numbersOfRows and cellForRowAt
+            //step 7 - reload table view
+            //also step 8 because reload fxn calls numberOfRows and cellForRowAt
             [self.tweetView reloadData];
             
         } else {
@@ -63,6 +71,7 @@
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
     
     // Create NSURL and NSURLRequest
+    /*
     NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/home_timeline.json"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil
@@ -73,6 +82,7 @@
         completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                 
            // ... Use the new data to update the data source
+            //Do I need to handle "data" here?
             [self fetchTweets];
             
            // Reload the tableView now that there is new data
@@ -83,6 +93,65 @@
         }];
     
     [task resume];
+     */
+    [self fetchTweets];
+    [refreshControl endRefreshing];
+}
+
+-(void)loadMoreData{
+    
+    // ... Create the NSURLRequest (myRequest) ...
+    // Create NSURL and NSURLRequest
+    /*
+    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/home_timeline.json"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
+    
+    // Configure session so that completion handler is executed on main UI thread
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    NSURLSession *session  = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *requestError) {
+        if (requestError != nil) {
+            
+        }
+        else
+        {
+            // Update flag
+            self.isMoreDataLoading = false;
+            
+            // ... Use the new data to update the data source ...
+            [self fetchTweets];
+            
+            // Reload the tableView now that there is new data
+            [self.tweetView reloadData];
+        }
+    }];
+    [task resume];
+     */
+    self.isMoreDataLoading = false;
+    
+    // ... Use the new data to update the data source ...
+    [self fetchTweets];
+    
+    // Reload the tableView now that there is new data
+    [self.tweetView reloadData];
+}
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    // Handle scroll behavior here
+    if(!self.isMoreDataLoading){
+        // Calculate the position of one screen length before the bottom of the results
+        int scrollViewContentHeight = self.tweetView.contentSize.height;
+        int scrollOffsetThreshold = scrollViewContentHeight - self.tweetView.bounds.size.height;
+        
+        // When the user has scrolled past the threshold, start requesting
+        if(scrollView.contentOffset.y > scrollOffsetThreshold && self.tweetView.isDragging) {
+            self.isMoreDataLoading = true;
+            [self loadMoreData];
+        }
+    }
 }
 
 
@@ -91,9 +160,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+//step 9 - returns number of items returned from API
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.tweets.count;
 }
+//step 10 - returns an instance of the custom cell with that reuse identifier
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     //NSLog(@"inside cellforRow");
     TweetCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
