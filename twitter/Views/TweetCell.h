@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *tweetImage;
 @property (weak, nonatomic) IBOutlet UILabel *tweetAuthor;
 @property (weak, nonatomic) IBOutlet UILabel *tweetBody;
+@property (weak, nonatomic) IBOutlet UILabel *tweetScreenName;
+@property (weak, nonatomic) IBOutlet UILabel *tweetDate;
+
 
 //this would be a dictionary and not a tweet object?
 @property(strong, nonatomic) NSDictionary *tweet;
