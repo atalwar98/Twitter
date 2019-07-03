@@ -13,6 +13,6 @@
 
 + (instancetype)shared;
 
-- (void)getHomeTimelineWithCompletion:(void(^)(NSArray *tweets, NSError *error))completion;
+-(void)getHomeTimelineWithCompletion:(void(^)(NSArray *tweets, NSError *error))completion;
 
 @end

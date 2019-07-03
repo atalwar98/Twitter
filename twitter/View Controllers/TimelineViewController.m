@@ -28,7 +28,7 @@
     //step 3 - view controller becomes datasource and delegate
     self.tweetView.dataSource = self;
     self.tweetView.delegate = self;
-    self.tweetView.rowHeight = 300;
+    self.tweetView.rowHeight = 200;
     
     //initializing pull to refresh control feature
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -69,66 +69,12 @@
 // Updates the tableView with the new data
 // Hides the RefreshControl
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
-    
-    // Create NSURL and NSURLRequest
-    /*
-    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/home_timeline.json"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil
-        delegateQueue:[NSOperationQueue mainQueue]];
-    session.configuration.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-    
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
-        completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                
-           // ... Use the new data to update the data source
-            //Do I need to handle "data" here?
-            [self fetchTweets];
-            
-           // Reload the tableView now that there is new data
-           [self.tweetView reloadData];
-                                                
-           // Tell the refreshControl to stop spinning
-           [refreshControl endRefreshing];
-        }];
-    
-    [task resume];
-     */
     [self fetchTweets];
     [refreshControl endRefreshing];
 }
 
 -(void)loadMoreData{
     
-    // ... Create the NSURLRequest (myRequest) ...
-    // Create NSURL and NSURLRequest
-    /*
-    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/home_timeline.json"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
-    
-    // Configure session so that completion handler is executed on main UI thread
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    
-    NSURLSession *session  = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *requestError) {
-        if (requestError != nil) {
-            
-        }
-        else
-        {
-            // Update flag
-            self.isMoreDataLoading = false;
-            
-            // ... Use the new data to update the data source ...
-            [self fetchTweets];
-            
-            // Reload the tableView now that there is new data
-            [self.tweetView reloadData];
-        }
-    }];
-    [task resume];
-     */
     self.isMoreDataLoading = false;
     
     // ... Use the new data to update the data source ...
