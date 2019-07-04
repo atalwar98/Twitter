@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-//this would be a dictionary and not a tweet object?
 @property(strong, nonatomic) Tweet *tweet;
 
 
