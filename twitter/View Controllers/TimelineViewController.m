@@ -12,12 +12,12 @@
 #import "UIImageView+AFNetworking.h"
 #import "Tweet.h"
 #import "User.h"
+#import "ComposeViewController.h"
 
-@interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
+@interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, ComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tweetView;
 @property (assign, nonatomic) BOOL isMoreDataLoading;
-
-@property (nonatomic, strong) NSArray *tweets;
+@property (nonatomic, strong) NSMutableArray *tweets;
 @end
 
 @implementation TimelineViewController
@@ -28,7 +28,7 @@
     //step 3 - view controller becomes datasource and delegate
     self.tweetView.dataSource = self;
     self.tweetView.delegate = self;
-    self.tweetView.rowHeight = 200;
+    self.tweetView.rowHeight = 150;
     
     //initializing pull to refresh control feature
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -47,7 +47,7 @@
         if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");
             //step 6 - view controller stores data passed into completion handler
-            self.tweets = [NSArray arrayWithArray:tweets];
+            self.tweets = [NSMutableArray arrayWithArray:tweets];
             NSLog(@"set tweets successfully");
             for (Tweet *tweetObj in tweets) {
                 NSString *text = tweetObj.text;
@@ -100,6 +100,11 @@
     }
 }
 
+- (void)didTweet:(Tweet *)tweet{
+    [self.tweets addObject:tweet];
+    [self.tweetView reloadData];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -137,15 +142,18 @@
     return tweetCell;
 }
 
-/*
+
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  // Get the new view controller using [segue destinationViewController].
  // Pass the selected object to the new view controller.
+     UINavigationController *navigationController = [segue destinationViewController];
+     ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+     composeController.delegate = self;
  }
- */
+
 
 
 @end

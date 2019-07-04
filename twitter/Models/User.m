@@ -14,7 +14,9 @@
     self = [super init];
     if (self) {
         self.name = dictionary[@"name"];
-        self.screenName = dictionary[@"screen_name"];
+        NSString *prefix = @"@";
+        NSString *name = dictionary[@"screen_name"];
+        self.screenName = [prefix stringByAppendingString:name];
         self.profileUrl = dictionary[@"profile_image_url_https"];
         // Initialize any other properties
     }

@@ -7,12 +7,13 @@
 //
 
 #import "ComposeViewController.h"
+#import "APIManager.h"
 
 @interface ComposeViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *composedTweet;
-- (IBAction)closeTweet:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *constructTweet;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeTweet;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closingTweet;
+
 
 @end
 
@@ -20,14 +21,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //self.composedTweet.text = @"test4";
     // Do any additional setup after loading the view.
 }
 
-
-
-- (void)setCloseTweet:(UIBarButtonItem *)closeTweet{
+- (IBAction)closeTweet:(UIBarButtonItem *)sender{
     [self dismissViewControllerAnimated:true completion:nil];
 }
+
+- (IBAction)newTweet:(UIBarButtonItem *)sender {
+    [[APIManager shared] postStatusWithText:self.composedTweet.text completion:^(Tweet *tweet, NSError *error) {
+        if (error){
+            NSLog(@"Error with POST Request %@", error.localizedDescription);
+        }
+        else{
+            [self.delegate didTweet:tweet];
+            NSLog(@"Compose Tweet Success!");
+        }
+        [self dismissViewControllerAnimated:true completion:nil];
+    }];
+}
+
+    
+
+
+
 
 /*
 #pragma mark - Navigation
@@ -39,6 +57,4 @@
 }
 */
 
-- (IBAction)closeTweet:(UIBarButtonItem *)sender {
-}
 @end

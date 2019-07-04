@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Tweet.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,10 +19,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *tweetDate;
 @property (weak, nonatomic) IBOutlet UILabel *favCount;
 @property (weak, nonatomic) IBOutlet UILabel *retweetCount;
+- (IBAction)didTapFavorite:(UIButton *)sender;
+
 
 
 //this would be a dictionary and not a tweet object?
-@property(strong, nonatomic) NSDictionary *tweet;
+@property(strong, nonatomic) Tweet *tweet;
+
+
 
 @end
 

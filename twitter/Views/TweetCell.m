@@ -19,6 +19,13 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+    
+    
 }
 
+- (IBAction)didTapFavorite:(UIButton *)sender {
+    self.tweet.favoriteCount = self.tweet.favoriteCount + 1;
+    self.tweet.favorited = YES;
+    
+}
 @end
