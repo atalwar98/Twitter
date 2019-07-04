@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TweetCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *tweetImage;
 @property (weak, nonatomic) IBOutlet UILabel *tweetAuthor;
 @property (weak, nonatomic) IBOutlet UILabel *tweetBody;
@@ -20,12 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *favCount;
 @property (weak, nonatomic) IBOutlet UILabel *retweetCount;
 - (IBAction)didTapFavorite:(UIButton *)sender;
-
-
-
 @property(strong, nonatomic) Tweet *tweet;
-
-
 
 @end
 

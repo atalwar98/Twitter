@@ -26,7 +26,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     //step 3 - view controller becomes datasource and delegate
     self.tweetView.dataSource = self;
     self.tweetView.delegate = self;
@@ -67,9 +66,35 @@
     
 }
 
-// Makes a network request to get updated data
-// Updates the tableView with the new data
-// Hides the RefreshControl
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+//step 9 - returns number of items returned from API
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.tweets.count;
+}
+//step 10 - returns an instance of the custom cell with that reuse identifier
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    TweetCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+    Tweet *post = self.tweets[indexPath.row];
+    User *user = post.user;
+    tweetCell.tweetAuthor.text = user.name;
+    tweetCell.tweetBody.text = post.text;
+    tweetCell.tweetScreenName.text = user.screenName;
+    tweetCell.tweetDate.text = post.createdAtString;
+    NSString* retweetToString = [NSString stringWithFormat:@"%i", post.retweetCount];
+    tweetCell.retweetCount.text = retweetToString;
+    NSString* favToString = [NSString stringWithFormat:@"%i", post.favoriteCount];
+    tweetCell.favCount.text = favToString;
+    NSString *profileUrl = user.profileUrl;
+    NSURL *url = [NSURL URLWithString:profileUrl];
+    [tweetCell.tweetImage setImageWithURL:url];
+    return tweetCell;
+}
+
+// Makes a network request to get updated data, Updates the tableView with the new data, Hides the RefreshControl
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
     [self fetchTweets];
     [refreshControl endRefreshing];
@@ -117,43 +142,6 @@
 
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-//step 9 - returns number of items returned from API
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.tweets.count;
-}
-//step 10 - returns an instance of the custom cell with that reuse identifier
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    //NSLog(@"inside cellforRow");
-    TweetCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
-    
-    Tweet *post = self.tweets[indexPath.row];
-    User *user = post.user;
-    tweetCell.tweetAuthor.text = user.name;
-    
-    tweetCell.tweetBody.text = post.text;
-    tweetCell.tweetScreenName.text = user.screenName;
-    tweetCell.tweetDate.text = post.createdAtString;
-    NSString* retweetToString = [NSString stringWithFormat:@"%i", post.retweetCount];
-    tweetCell.retweetCount.text = retweetToString;
-    NSString* favToString = [NSString stringWithFormat:@"%i", post.favoriteCount];
-    tweetCell.favCount.text = favToString;
-    //NSLog(@"tweet's body %@", post.text);
-    NSString *profileUrl = user.profileUrl;
-    //NSLog(@"tweet's image url %@", profileUrl);
-    NSURL *url = [NSURL URLWithString:profileUrl];
-    
-     
-    [tweetCell.tweetImage setImageWithURL:url];
-    
-    return tweetCell;
-}
-
-
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -164,7 +152,5 @@
      ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
      composeController.delegate = self;
  }
-
-
 
 @end

@@ -9,7 +9,6 @@
 #import "User.h"
 
 @implementation User
-
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
@@ -18,9 +17,7 @@
         NSString *name = dictionary[@"screen_name"];
         self.screenName = [prefix stringByAppendingString:name];
         self.profileUrl = dictionary[@"profile_image_url_https"];
-        // Initialize any other properties
     }
     return self;
 }
-
 @end

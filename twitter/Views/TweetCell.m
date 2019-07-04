@@ -18,10 +18,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
-    
-    
 }
 
 - (IBAction)didTapFavorite:(UIButton *)sender {
@@ -31,22 +28,17 @@
         }
         else{
             NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
-            self.tweet.favoriteCount = self.tweet.favoriteCount + 1;
             self.tweet.favorited = YES;
-            
+            self.tweet.favoriteCount = self.tweet.favoriteCount + 1;
         }
         [self refreshData];
         
     }];
-    
 }
 
 - (void) refreshData{
     NSString *fav = [NSString stringWithFormat:@"%i", self.tweet.favoriteCount];
     self.favCount.text = fav;
 }
-
-
-
 
 @end

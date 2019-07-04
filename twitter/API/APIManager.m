@@ -42,10 +42,8 @@ static NSString * const consumerSecret = @"6GQOoaRCkftV68KxdeVaY9REzznn2d6uGlA9y
     if ([[NSUserDefaults standardUserDefaults] stringForKey:@"consumer-secret"]) {
         secret = [[NSUserDefaults standardUserDefaults] stringForKey:@"consumer-secret"];
     }
-    
     self = [super initWithBaseURL:baseURL consumerKey:key consumerSecret:secret];
     if (self) {
-        
     }
     return self;
 }
@@ -54,12 +52,10 @@ static NSString * const consumerSecret = @"6GQOoaRCkftV68KxdeVaY9REzznn2d6uGlA9y
     // Create a GET Request
     [self GET:@"1.1/statuses/home_timeline.json"
    parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
-       // Success
        NSMutableArray *tweets  = [Tweet tweetsWithArray:tweetDictionaries];
        //step 5 -call completion handler, passing back data
        completion(tweets, nil); //passing array of Tweet objects to the completion block
    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-       // There was a problem
        completion(nil, error);
    }];
 }
