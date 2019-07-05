@@ -80,12 +80,13 @@
     TweetCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     Tweet *post = self.tweets[indexPath.row];
     User *user = post.user;
+    tweetCell.tweet = post;
     tweetCell.tweetAuthor.text = user.name;
     tweetCell.tweetBody.text = post.text;
     tweetCell.tweetScreenName.text = user.screenName;
     tweetCell.tweetDate.text = post.createdAtString;
     NSString* retweetToString = [NSString stringWithFormat:@"%i", post.retweetCount];
-    tweetCell.retweetCount.text = retweetToString;
+    tweetCell.retweetedCount.text = retweetToString;
     NSString* favToString = [NSString stringWithFormat:@"%i", post.favoriteCount];
     tweetCell.favCount.text = favToString;
     NSString *profileUrl = user.profileUrl;
@@ -99,7 +100,7 @@
     [self fetchTweets];
     [refreshControl endRefreshing];
 }
-
+/*
 -(void)loadMoreData{
     
     self.isMoreDataLoading = false;
@@ -126,9 +127,9 @@
         }
     }
 }
-
+*/
 - (void)didTweet:(Tweet *)tweet{
-    [self.tweets addObject:tweet];
+    [self.tweets insertObject:tweet atIndex:0];
     [self.tweetView reloadData];
 }
 
