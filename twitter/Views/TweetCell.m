@@ -22,19 +22,23 @@
 }
 
 - (IBAction)didTapFavorite:(UIButton *)sender {
+    self.tweet.favoriteCount = self.tweet.favoriteCount + 1;
+    self.tweet.favorited = YES;
+    [self refreshData];
     [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
         if(error){
             NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
         }
         else{
             NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
-            self.tweet.favorited = YES;
-            self.tweet.favoriteCount = self.tweet.favoriteCount + 1;
         }
-        [self refreshData];
-        
     }];
 }
+
+- (IBAction)didTapRetweet:(UIButton *)sender {
+    
+}
+
 
 - (void) refreshData{
     NSString *fav = [NSString stringWithFormat:@"%i", self.tweet.favoriteCount];

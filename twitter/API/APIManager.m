@@ -53,7 +53,7 @@ static NSString * const consumerSecret = @"6GQOoaRCkftV68KxdeVaY9REzznn2d6uGlA9y
     [self GET:@"1.1/statuses/home_timeline.json"
    parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
        NSMutableArray *tweets  = [Tweet tweetsWithArray:tweetDictionaries];
-       //step 5 -call completion handler, passing back data
+       //step 5 - calls completion handler, passing back data
        completion(tweets, nil); //passing array of Tweet objects to the completion block
    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
        completion(nil, error);

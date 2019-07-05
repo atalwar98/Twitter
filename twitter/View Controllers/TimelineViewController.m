@@ -29,7 +29,7 @@
     //step 3 - view controller becomes datasource and delegate
     self.tweetView.dataSource = self;
     self.tweetView.delegate = self;
-    self.tweetView.rowHeight = 150;
+    //self.tweetView.rowHeight = 150;
     
     //initializing pull to refresh control feature
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
