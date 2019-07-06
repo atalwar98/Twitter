@@ -46,8 +46,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. delegates and protocols
+2. procedure of calling API Manager 
 
 ## Video Walkthrough
 
@@ -62,6 +62,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Notes
 
 Describe any challenges encountered while building the app.
+
+Since this app relied on less guidance, it was difficult at times to figure things out/understand conceptually. Debugging was also challenging initially.
 
 ## Credits
 
