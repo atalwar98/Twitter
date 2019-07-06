@@ -29,20 +29,17 @@
     //step 3 - view controller becomes datasource and delegate
     self.tweetView.dataSource = self;
     self.tweetView.delegate = self;
-    //self.tweetView.rowHeight = 150;
-    
     //initializing pull to refresh control feature
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:UIControlEventValueChanged];
-     [self.tweetView insertSubview:refreshControl atIndex:0];
-    
+    [self.tweetView insertSubview:refreshControl atIndex:0];
     [self fetchTweets];
-    
 }
 
-- (void) fetchTweets {
+- (void)fetchTweets {
     // Get timeline
-    //first time shared is called you are instantiating an APIManager instance:
+    //first time "shared"
+    //is called you are instantiating an APIManager instance:
     //step 4 - make an API request
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
@@ -55,15 +52,13 @@
                 NSLog(@"%@", text);
             }
             //table view asks its datasource for numbersOfRows and cellForRowAt
-            //step 7 - reload table view
-            //also step 8 because reload fxn calls numberOfRows and cellForRowAt
+            //step 7 - reload table view & step 8 because reload fxn calls numberOfRows and cellForRowAt
             [self.tweetView reloadData];
             
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
     }];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -75,6 +70,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.tweets.count;
 }
+
 //step 10 - returns an instance of the custom cell with that reuse identifier
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TweetCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
@@ -100,34 +96,7 @@
     [self fetchTweets];
     [refreshControl endRefreshing];
 }
-/*
--(void)loadMoreData{
-    
-    self.isMoreDataLoading = false;
-    
-    // ... Use the new data to update the data source ...
-    [self fetchTweets];
-    
-    // Reload the tableView now that there is new data
-    [self.tweetView reloadData];
-}
 
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    // Handle scroll behavior here
-    if(!self.isMoreDataLoading){
-        // Calculate the position of one screen length before the bottom of the results
-        int scrollViewContentHeight = self.tweetView.contentSize.height;
-        int scrollOffsetThreshold = scrollViewContentHeight - self.tweetView.bounds.size.height;
-        
-        // When the user has scrolled past the threshold, start requesting
-        if(scrollView.contentOffset.y > scrollOffsetThreshold && self.tweetView.isDragging) {
-            self.isMoreDataLoading = true;
-            [self loadMoreData];
-        }
-    }
-}
-*/
 - (void)didTweet:(Tweet *)tweet{
     [self.tweets insertObject:tweet atIndex:0];
     [self.tweetView reloadData];

@@ -16,15 +16,12 @@
     // Initialization code
 }
 
-//
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     // Configure the view for the selected state
 }
 
 - (IBAction)didTapFavorite:(UIButton *)sender {
-    NSLog(@"favorited status is %d", self.tweet.favorited);
     if(self.tweet.favorited){
         self.tweet.favoriteCount = self.tweet.favoriteCount - 1;
         self.tweet.favorited = NO;
@@ -53,7 +50,6 @@
             }
         }];
     }
-    
 }
 
 - (IBAction)didTapRetweet:(UIButton *)sender {
