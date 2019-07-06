@@ -32,10 +32,10 @@
         [self.favButton setSelected:NO];
         [[APIManager shared] unfavorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error){
-                NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
+                NSLog(@"Error unfavoriting tweet: %@", error.localizedDescription);
             }
             else{
-                NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
+                NSLog(@"Successfully unfavorited the following Tweet: %@", tweet.text);
             }
         }];
     }
@@ -64,10 +64,10 @@
         [self.retweetButton setSelected:NO];
         [[APIManager shared] unretweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error){
-                NSLog(@"Error retweeting tweet: %@", error.localizedDescription);
+                NSLog(@"Error unretweeting tweet: %@", error.localizedDescription);
             }
             else{
-                NSLog(@"Successfully retweeted the following Tweet: %@", tweet.text);
+                NSLog(@"Successfully unretweeted the following Tweet: %@", tweet.text);
             }
         }];
     }

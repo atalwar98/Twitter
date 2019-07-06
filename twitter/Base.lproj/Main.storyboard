@@ -104,13 +104,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xwn-pv-F6e">
-                                                    <rect key="frame" x="343" y="58.5" width="31" height="15"/>
+                                                    <rect key="frame" x="335" y="58.5" width="31" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMh-be-saa">
-                                                    <rect key="frame" x="250" y="52" width="30" height="30"/>
+                                                    <rect key="frame" x="242" y="52" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="02L-Zu-cAx"/>
                                                         <constraint firstAttribute="height" constant="30" id="dop-Pi-wP6"/>
@@ -133,8 +133,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iS-od-1h4">
-                                                    <rect key="frame" x="319" y="52" width="30" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iS-od-1h4">
+                                                    <rect key="frame" x="302" y="52" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="hIh-YL-r5Y"/>
                                                         <constraint firstAttribute="width" constant="30" id="xqK-V0-kxp"/>
@@ -152,6 +152,7 @@
                                                 <constraint firstItem="DZh-Rs-BJW" firstAttribute="firstBaseline" secondItem="WPS-dn-Dcd" secondAttribute="firstBaseline" id="9Yi-Jn-q0D"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="uzq-Ex-rFU" secondAttribute="bottom" constant="10" id="D9C-Wh-M5I"/>
                                                 <constraint firstItem="VTC-Xs-Wnz" firstAttribute="leading" secondItem="uzq-Ex-rFU" secondAttribute="trailing" constant="13" id="E7N-Th-o64"/>
+                                                <constraint firstItem="Xwn-pv-F6e" firstAttribute="trailing" secondItem="DZh-Rs-BJW" secondAttribute="trailing" id="Gjw-3a-Yam"/>
                                                 <constraint firstItem="MMK-NK-Ok9" firstAttribute="top" secondItem="VTC-Xs-Wnz" secondAttribute="bottom" constant="8" id="Im3-VX-WWS"/>
                                                 <constraint firstItem="uzq-Ex-rFU" firstAttribute="leading" secondItem="XHO-wD-4QZ" secondAttribute="leading" constant="15" id="Jly-pH-sAH"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="4iS-od-1h4" secondAttribute="bottom" constant="10" id="KbS-Y0-nqS"/>
@@ -165,7 +166,6 @@
                                                 <constraint firstItem="4iS-od-1h4" firstAttribute="top" secondItem="eMh-be-saa" secondAttribute="top" id="hvN-Yx-nSd"/>
                                                 <constraint firstItem="Xwn-pv-F6e" firstAttribute="leading" secondItem="4iS-od-1h4" secondAttribute="trailing" constant="3" id="jfn-DS-IQQ"/>
                                                 <constraint firstAttribute="trailing" secondItem="DZh-Rs-BJW" secondAttribute="trailing" constant="9" id="k5B-y9-RQG"/>
-                                                <constraint firstItem="eMh-be-saa" firstAttribute="leading" secondItem="uzq-Ex-rFU" secondAttribute="trailing" constant="180" id="poL-Bs-YH2"/>
                                                 <constraint firstItem="Nns-iD-W57" firstAttribute="leading" secondItem="eMh-be-saa" secondAttribute="trailing" constant="6" id="rjX-Wa-GBh"/>
                                                 <constraint firstItem="WPS-dn-Dcd" firstAttribute="firstBaseline" secondItem="VTC-Xs-Wnz" secondAttribute="firstBaseline" id="uVi-fW-tPn"/>
                                                 <constraint firstAttribute="trailing" secondItem="MMK-NK-Ok9" secondAttribute="trailing" constant="15" id="xpS-RU-6Yq"/>
