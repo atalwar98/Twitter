@@ -9,10 +9,11 @@
 #import "ComposeViewController.h"
 #import "APIManager.h"
 
-@interface ComposeViewController ()
+@interface ComposeViewController () <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *composedTweet;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *constructTweet;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closingTweet;
+@property (weak, nonatomic) IBOutlet UILabel *charDiff;
 
 
 @end
@@ -21,12 +22,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //self.composedTweet.text = @"test4";
     // Do any additional setup after loading the view.
+    self.composedTweet.delegate = self;
 }
 
 - (IBAction)closeTweet:(UIBarButtonItem *)sender{
     [self dismissViewControllerAnimated:true completion:nil];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    // TODO: Check the proposed new text character count
+    // Allow or disallow the new text
+    
+    // Set the max character limit
+    int characterLimit = 140;
+    
+    // Construct what the new text would be if we allowed the user's latest edit
+    NSString *newText = [self.composedTweet.text stringByReplacingCharactersInRange:range withString:text];
+    
+    // TODO: Update Character Count Label
+    int diff = characterLimit - newText.length;
+    self.charDiff.text = [NSString stringWithFormat:@"You have %i characters remaining.", diff];
+    // The new text should be allowed? True/False
+    return newText.length < characterLimit;
 }
 
 - (IBAction)newTweet:(UIBarButtonItem *)sender {
@@ -41,11 +59,6 @@
         [self dismissViewControllerAnimated:true completion:nil];
     }];
 }
-
-    
-
-
-
 
 /*
 #pragma mark - Navigation
