@@ -47,7 +47,6 @@
             NSLog(@"😎😎😎 Successfully loaded home timeline");
             //step 6 - view controller stores data passed into completion handler
             self.tweets = [NSMutableArray arrayWithArray:tweets];
-            NSLog(@"set tweets successfully");
             for (Tweet *tweetObj in tweets) {
                 NSString *text = tweetObj.text;
                 NSLog(@"%@", text);
@@ -75,8 +74,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TweetCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     Tweet *post = self.tweets[indexPath.row];
-    NSLog(@"Tweet is favorited %d", post.favorited);
-    NSLog(@"Tweet is retweeted %d", post.retweeted);
     User *user = post.user;
     tweetCell.tweet = post;
     tweetCell.tweetAuthor.text = user.name;
@@ -106,7 +103,6 @@
 
 - (IBAction)tapLogout:(UIBarButtonItem *)sender {
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     appDelegate.window.rootViewController = loginViewController;
@@ -123,8 +119,6 @@
          NSIndexPath *indexPath = [self.tweetView indexPathForCell:tappedCell];
          Tweet *selectedTweet = self.tweets[indexPath.row];
           [self.tweetView deselectRowAtIndexPath:indexPath animated:YES];
-         NSLog(@"%d",selectedTweet.favorited);
-         NSLog(@"%d",selectedTweet.retweeted);
          TweetDetailsViewController *detailsController = [segue destinationViewController];
          detailsController.prevTweet = selectedTweet;
      }

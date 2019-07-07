@@ -14,23 +14,18 @@
 
 @interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tweetsAndRetweetsView;
-
 @end
 
 @implementation ProfileViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.tweetsAndRetweetsView.dataSource = self;
     self.tweetsAndRetweetsView.delegate = self;
-    
-    //[self.tweetsAndRetweetsView reloadData];
 }
--(IBAction)closeTweetsAndRetweets:(UIBarButtonItem *)sender {
+- (IBAction)closeTweetsAndRetweets:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:true completion:nil];
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.filteredTweets.count;

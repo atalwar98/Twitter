@@ -21,8 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
     self.tweetDetailsBody.text = self.prevTweet.text;
     self.tweetDetailsDate.text = self.prevTweet.createdAtString;
     self.tweetDetailsAuthor.text = self.prevTweet.user.name;
@@ -30,14 +28,12 @@
     NSString *pictureURL = self.prevTweet.user.profileUrl;
     NSURL *url = [NSURL URLWithString:pictureURL];
     [self.tweetDetailsView setImageWithURL:url];
-    
     if(self.prevTweet.favorited){
         [self.tweetDetailsFav setSelected:YES];
     }
     if(self.prevTweet.retweeted){
         [self.tweetDetailsRetweet setSelected:YES];
     }
-    
 }
 
 /*

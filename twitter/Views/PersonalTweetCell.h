@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *tweetScreenName;
 @property (weak, nonatomic) IBOutlet UIButton *reTweetButton;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
-
 @end
 
 NS_ASSUME_NONNULL_END
