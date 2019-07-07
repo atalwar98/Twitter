@@ -6,17 +6,17 @@
 //  Copyright © 2018 Emerson Malca. All rights reserved.
 //
 
-#import "TimelineViewController.h"
+
 #import "APIManager.h"
-#import "TweetCell.h"
-#import "UIImageView+AFNetworking.h"
-#import "Tweet.h"
-#import "User.h"
-#import "ComposeViewController.h"
 #import "AppDelegate.h"
+#import "ComposeViewController.h"
 #import "LoginViewController.h"
-#import "TweetDetailsViewController.h"
 #import "ProfileViewController.h"
+
+#import "UIImageView+AFNetworking.h"
+#import "TimelineViewController.h"
+#import "TweetCell.h"
+#import "TweetDetailsViewController.h"
 
 @interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, ComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tweetView;
@@ -25,7 +25,6 @@
 @end
 
 @implementation TimelineViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     //step 3 - view controller becomes datasource and delegate
@@ -39,7 +38,6 @@
 }
 
 - (void)fetchTweets {
-    // Get timeline
     //first time "shared" is called you are instantiating an APIManager instance:
     //step 4 - make an API request
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
@@ -111,38 +109,48 @@
 
  #pragma mark - Navigation
 
+- (void)tweetDetailsSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    TweetCell *tappedCell = sender;
+    NSIndexPath *indexPath = [self.tweetView indexPathForCell:tappedCell];
+    Tweet *selectedTweet = self.tweets[indexPath.row];
+    [self.tweetView deselectRowAtIndexPath:indexPath animated:YES];
+    TweetDetailsViewController *detailsController = [segue destinationViewController];
+    detailsController.prevTweet = selectedTweet;
+}
+
+- (void)composeTweetSegue:(UIStoryboardSegue *)segue{
+    UINavigationController *navigationController = [segue destinationViewController];
+    ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+    composeController.delegate = self;
+}
+
+- (void)personalTweetsSegue:(UIStoryboardSegue *)segue{
+    UINavigationController *navController = [segue destinationViewController];
+    ProfileViewController *profileController = (ProfileViewController*)navController.topViewController;
+    profileController.filteredTweets = [[NSMutableArray alloc] init];
+    for(Tweet *tweetObj in self.tweets){
+        NSString *userName = tweetObj.user.name;
+        if ([userName isEqualToString:@"Anika Talwar"]){
+            [profileController.filteredTweets addObject:tweetObj];
+        }
+    }
+    for(Tweet *tweetObj in self.tweets){
+        BOOL retweet = tweetObj.retweeted;
+        if(retweet){
+            [profileController.filteredTweets insertObject:tweetObj atIndex:0];
+        }
+    }
+}
+
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  // Get the new view controller using [segue destinationViewController].
  // Pass the selected object to the new view controller.
      if([segue.identifier  isEqual: @"tweetDetails"]){
-         TweetCell *tappedCell = sender;
-         NSIndexPath *indexPath = [self.tweetView indexPathForCell:tappedCell];
-         Tweet *selectedTweet = self.tweets[indexPath.row];
-          [self.tweetView deselectRowAtIndexPath:indexPath animated:YES];
-         TweetDetailsViewController *detailsController = [segue destinationViewController];
-         detailsController.prevTweet = selectedTweet;
-     }
-     else if ([segue.identifier  isEqual: @"composeTweet"]){
-         UINavigationController *navigationController = [segue destinationViewController];
-         ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
-         composeController.delegate = self;
-     }
-     else if ([segue.identifier  isEqual: @"personalTweets"]){
-         UINavigationController *navController = [segue destinationViewController];
-         ProfileViewController *profileController = (ProfileViewController*)navController.topViewController;
-         profileController.filteredTweets = [[NSMutableArray alloc] init];
-         for(Tweet *tweetObj in self.tweets){
-             NSString *userName = tweetObj.user.name;
-             if ([userName isEqualToString:@"Anika Talwar"]){
-                 [profileController.filteredTweets addObject:tweetObj];
-             }
-         }
-         for(Tweet *tweetObj in self.tweets){
-             BOOL retweet = tweetObj.retweeted;
-             if(retweet){
-                 [profileController.filteredTweets insertObject:tweetObj atIndex:0];
-             }
-         }
+         [self tweetDetailsSegue:segue sender:sender];
+     } else if ([segue.identifier  isEqual: @"composeTweet"]){
+         [self composeTweetSegue:segue];
+     } else if ([segue.identifier  isEqual: @"personalTweets"]){
+         [self personalTweetsSegue:segue];
      }
  }
 

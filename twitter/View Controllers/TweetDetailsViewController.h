@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TweetDetailsViewController : UIViewController
-@property (nonatomic, strong) Tweet *prevTweet;
+@property (strong, nonatomic) Tweet *prevTweet;
 @property (weak, nonatomic) IBOutlet UIButton *tweetDetailsFav;
 @property (weak, nonatomic) IBOutlet UIButton *tweetDetailsRetweet;
 @end

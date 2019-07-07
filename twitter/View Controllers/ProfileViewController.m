@@ -17,7 +17,6 @@
 @end
 
 @implementation ProfileViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tweetsAndRetweetsView.dataSource = self;
@@ -59,5 +58,4 @@
     // Pass the selected object to the new view controller.
 }
 */
-
 @end

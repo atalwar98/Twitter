@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ProfileViewController : UIViewController
-@property (nonatomic, strong) NSMutableArray *filteredTweets;
+@property (strong, nonatomic) NSMutableArray *filteredTweets;
 @end
 
 NS_ASSUME_NONNULL_END

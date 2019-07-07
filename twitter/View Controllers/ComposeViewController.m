@@ -43,8 +43,7 @@
     [[APIManager shared] postStatusWithText:self.composedTweet.text completion:^(Tweet *tweet, NSError *error) {
         if (error){
             NSLog(@"Error with POST Request %@", error.localizedDescription);
-        }
-        else{
+        } else{
             [self.delegate didTweet:tweet];
             NSLog(@"Compose Tweet Success!");
         }
@@ -61,5 +60,4 @@
     // Pass the selected object to the new view controller.
 }
 */
-
 @end

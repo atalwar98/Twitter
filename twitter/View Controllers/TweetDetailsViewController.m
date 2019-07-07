@@ -18,7 +18,6 @@
 @end
 
 @implementation TweetDetailsViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tweetDetailsBody.text = self.prevTweet.text;
@@ -45,5 +44,4 @@
     // Pass the selected object to the new view controller.
 }
 */
-
 @end

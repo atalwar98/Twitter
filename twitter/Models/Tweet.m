@@ -10,7 +10,6 @@
 #import "User.h"
 
 @implementation Tweet
-
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
@@ -46,7 +45,10 @@
     return self;
 }
 
-//factory method that takes an array of tweet dictionaries and returns an array of Tweet objects - array returned has each tweet dictionary initialized in a customized way
+/*
+factory method that takes an array of tweet dictionaries and returns an array of Tweet objects - array returned has each
+ tweet dictionary initialized in a customized way
+ */
 + (NSMutableArray *)tweetsWithArray:(NSArray *)dictionaries{
     NSMutableArray *tweets = [NSMutableArray array];
     for (NSDictionary *dictionary in dictionaries) {
@@ -55,5 +57,4 @@
     }
     return tweets;
 }
-
 @end

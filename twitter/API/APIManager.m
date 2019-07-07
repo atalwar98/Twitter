@@ -14,13 +14,10 @@ static NSString * const consumerKey = @"UmP43OLAXjdBWJ4j8kzVYoM35";
 static NSString * const consumerSecret = @"6GQOoaRCkftV68KxdeVaY9REzznn2d6uGlA9ytRZmrENjly97B";
 
 @interface APIManager()
-
 @end
 
 @implementation APIManager
-
 //APIManager is an object that makes an API request on your behalf
-
 + (instancetype)shared {
     static APIManager *sharedManager = nil;
     static dispatch_once_t onceToken;
@@ -34,7 +31,6 @@ static NSString * const consumerSecret = @"6GQOoaRCkftV68KxdeVaY9REzznn2d6uGlA9y
     NSURL *baseURL = [NSURL URLWithString:baseURLString];
     NSString *key = consumerKey;
     NSString *secret = consumerSecret;
-    // Check for launch arguments override
     if ([[NSUserDefaults standardUserDefaults] stringForKey:@"consumer-key"]) {
         key = [[NSUserDefaults standardUserDefaults] stringForKey:@"consumer-key"];
     }
@@ -62,7 +58,6 @@ static NSString * const consumerSecret = @"6GQOoaRCkftV68KxdeVaY9REzznn2d6uGlA9y
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion{
     NSString *urlString = @"1.1/statuses/update.json";
     NSDictionary *parameters = @{@"status": text};
-    
     [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
         Tweet *tweet = [[Tweet alloc] initWithDictionary:tweetDictionary];
         completion(tweet, nil);
@@ -114,5 +109,4 @@ static NSString * const consumerSecret = @"6GQOoaRCkftV68KxdeVaY9REzznn2d6uGlA9y
         completion(nil, error);
     }];
 }
-
 @end
