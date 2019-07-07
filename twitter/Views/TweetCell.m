@@ -22,6 +22,7 @@
 }
 
 - (IBAction)didTapFavorite:(UIButton *)sender {
+    NSLog(@"Is tweet favorited? %d", self.tweet.favorited);
     if(self.tweet.favorited){
         self.tweet.favoriteCount = self.tweet.favoriteCount - 1;
         self.tweet.favorited = NO;

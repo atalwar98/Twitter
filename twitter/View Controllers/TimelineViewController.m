@@ -15,6 +15,8 @@
 #import "ComposeViewController.h"
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "TweetDetailsViewController.h"
+#import "ProfileViewController.h"
 
 @interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, ComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tweetView;
@@ -38,8 +40,7 @@
 
 - (void)fetchTweets {
     // Get timeline
-    //first time "shared"
-    //is called you are instantiating an APIManager instance:
+    //first time "shared" is called you are instantiating an APIManager instance:
     //step 4 - make an API request
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
@@ -54,7 +55,6 @@
             //table view asks its datasource for numbersOfRows and cellForRowAt
             //step 7 - reload table view & step 8 because reload fxn calls numberOfRows and cellForRowAt
             [self.tweetView reloadData];
-            
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
@@ -75,6 +75,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TweetCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     Tweet *post = self.tweets[indexPath.row];
+    NSLog(@"Tweet is favorited %d", post.favorited);
+    NSLog(@"Tweet is retweeted %d", post.retweeted);
     User *user = post.user;
     tweetCell.tweet = post;
     tweetCell.tweetAuthor.text = user.name;
@@ -109,18 +111,45 @@
     LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     appDelegate.window.rootViewController = loginViewController;
     [[APIManager shared] logout];
-
 }
 
  #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
+
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  // Get the new view controller using [segue destinationViewController].
  // Pass the selected object to the new view controller.
-     UINavigationController *navigationController = [segue destinationViewController];
-     ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
-     composeController.delegate = self;
+     if([segue.identifier  isEqual: @"tweetDetails"]){
+         TweetCell *tappedCell = sender;
+         NSIndexPath *indexPath = [self.tweetView indexPathForCell:tappedCell];
+         Tweet *selectedTweet = self.tweets[indexPath.row];
+          [self.tweetView deselectRowAtIndexPath:indexPath animated:YES];
+         NSLog(@"%d",selectedTweet.favorited);
+         NSLog(@"%d",selectedTweet.retweeted);
+         TweetDetailsViewController *detailsController = [segue destinationViewController];
+         detailsController.prevTweet = selectedTweet;
+     }
+     else if ([segue.identifier  isEqual: @"composeTweet"]){
+         UINavigationController *navigationController = [segue destinationViewController];
+         ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+         composeController.delegate = self;
+     }
+     else if ([segue.identifier  isEqual: @"personalTweets"]){
+         UINavigationController *navController = [segue destinationViewController];
+         ProfileViewController *profileController = (ProfileViewController*)navController.topViewController;
+         profileController.filteredTweets = [[NSMutableArray alloc] init];
+         for(Tweet *tweetObj in self.tweets){
+             NSString *userName = tweetObj.user.name;
+             if ([userName isEqualToString:@"Anika Talwar"]){
+                 [profileController.filteredTweets addObject:tweetObj];
+             }
+         }
+         for(Tweet *tweetObj in self.tweets){
+             BOOL retweet = tweetObj.retweeted;
+             if(retweet){
+                 [profileController.filteredTweets insertObject:tweetObj atIndex:0];
+             }
+         }
+     }
  }
 
 @end
